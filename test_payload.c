@@ -39,7 +39,7 @@ gcc -o test_payload test_payload.c -z execstack
 
 Run:
 ----
-$ ./test_payload               
+./test_payload               
 
 $ id
 uid=1000(xtk)...
