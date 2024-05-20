@@ -15,10 +15,10 @@ Shellcode Length: 22 bytes
 
 ## The C payload tester
 
-### Compilation
+### Compile
 `gcc -o test_payload test_payload.c -z execstack`
 
-### Run
+### Test
 ```bash
 ./test_payload               
 
