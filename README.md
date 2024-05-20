@@ -57,7 +57,7 @@ This assembly decodes XOR endcoded shellcode and uses JMP-CALL-POP technique to 
 ### Usage
 
 ```bash
-nasm -f elf64 -o shellcode.o shellcode.asm
+nasm -f elf64 -o shellcode.o XOR_decoder.nasm
 ld -o shellcode shellcode.o
 ```
 
