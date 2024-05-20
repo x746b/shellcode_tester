@@ -17,7 +17,7 @@ decode_loop:
     xor byte [rsi + rcx - 1], 0xAA  ; XOR each byte with 0xAA
     loop decode_loop         ; loop until rcx is zero
 
-    ; Here we can add code to use the decoded payload for this case it is just jump to it
+    ; Here we can add code to use the decoded payload the simple use case is just jump to it
     jmp rsi
 
 exit:
