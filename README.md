@@ -50,7 +50,7 @@ Encoded shellcode:
 ...
 ```
 
-### ASM XOR payload decoder
+### XOR payload decoder assembly
 
 This assembly decodes XOR endcoded shellcode and uses JMP-CALL-POP technique to dynamically find the address of the payload in a position-independent manner, ensuring the decoder works regardless of where the code is loaded in memory.
 
