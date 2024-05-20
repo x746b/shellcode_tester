@@ -26,7 +26,7 @@ $ id
 uid=1000(xtk)...
 ```
 
-## The XOR key finder
+## XOR key finder
 
 This script helps to avoid specified badbytes by static XOR key encoding. 
 It looks for appropriate XOR key to fit specified badbytes
@@ -50,7 +50,7 @@ Encoded shellcode:
 ...
 ```
 
-### XOR payload decoder assembly
+## XOR payload decoder assembly
 
 This assembly decodes XOR endcoded shellcode and uses JMP-CALL-POP technique to dynamically find the address of the payload in a position-independent manner, ensuring the decoder works regardless of where the code is loaded in memory.
 
